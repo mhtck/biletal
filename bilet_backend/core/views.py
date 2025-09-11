@@ -256,13 +256,27 @@ def reservation_status(request, reservation_id):
             'error': str(e)
         }, status=500)
 
-@api_view(['GET'])
+@api_view(['POST'])
 def trip_list(request):
     """Sefer listesi sayfası"""
-    trips = Trip.objects.filter(status='scheduled').select_related('route', 'vehicle', 'company')
-    serializer = TripSerializer(trips, many=True)
-    return JsonResponse({'response': serializer.data}, status=status.HTTP_200_OK)
+    origin = request.data.get('origin')
+    destination = request.data.get('destination')
+    vehicle_type = request.data.get('vehicle_type')
 
+    if not all([origin, destination, vehicle_type]):
+        return Response({"detail": "origin, destination ve vehicle_type gereklidir."},
+                        status=status.HTTP_400_BAD_REQUEST)
+
+    trips = Trip.objects.filter(
+        route__origin__iexact=origin,
+        route__destination__iexact=destination,
+        vehicle__vehicle_type=vehicle_type,
+        status='scheduled'
+    )
+
+    serializer = TripSerializer(trips, many=True)
+    return Response(serializer.data)
+   
 @api_view(['GET'])
 def trip_detail(request, trip_id):
     """Sefer detay ve koltuk seçimi sayfası"""

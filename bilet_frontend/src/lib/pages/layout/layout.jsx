@@ -13,7 +13,7 @@ import {
 import { Label } from "@radix-ui/react-label";
 import { ArrowRightLeft } from "lucide-react";
 
-const LayoutComponent = ({ children }) => {
+function LayoutComponent({ children }) {
   const [nereden, setNereden] = useState("");
   const [nereye, setNereye] = useState("");
 
@@ -28,12 +28,10 @@ const LayoutComponent = ({ children }) => {
       <Navbar01 setVehicleType={setVehicleType} />
 
       <main className="max-w-7xl mx-auto items-center py-2 px-4">
-        {typeof children === 'function'
-          ? children({ vehicleType }) 
-          : children}
+        {typeof children === "function" ? children({ vehicleType }) : children}
       </main>
     </div>
   );
-};
+}
 
 export default LayoutComponent;

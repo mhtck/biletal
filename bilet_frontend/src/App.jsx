@@ -74,8 +74,8 @@ function App() {
             path="/"
             element={
               <PublicRoute>
-                <LayoutComponent >
-                  <HomePage/>
+                <LayoutComponent>
+                  <HomePage />
                 </LayoutComponent>
               </PublicRoute>
             }
@@ -85,7 +85,7 @@ function App() {
             element={
               <PublicRoute>
                 <LayoutComponent>
-                  <BusBookingApp />
+                  {(props) => <BusBookingApp {...props} />}
                 </LayoutComponent>
               </PublicRoute>
             }

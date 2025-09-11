@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -34,110 +34,40 @@ import {
   PopoverContent,
 } from "@/components/ui/popover";
 import { useNavigate } from "react-router";
+import { useDispatch, useSelector } from "react-redux";
+import { setFindTrip } from "@/lib/redux/tripSlice";
 
 const FormSchema = z.object({
-  from: z.string({ required_error: "Nereden seçilmeli" }),
-  to: z.string({ required_error: "Nereye seçilmeli" }),
+  origin: z.string({ required_error: "Nereden seçilmeli" }),
+  destination: z.string({ required_error: "Nereye seçilmeli" }),
   date: z.date({ required_error: "Tarih gerekli" }),
 });
 
 export function TripSearchForm({ vehicleType }) {
-  const vehicle = { bus: "Otobüs", plain: "Uçak", train: "Tren" };
+  const dispatch = useDispatch();
 
-  const iller = [
-    "Adana",
-    "Adıyaman",
-    "Afyonkarahisar",
-    "Ağrı",
-    "Amasya",
-    "Ankara",
-    "Antalya",
-    "Artvin",
-    "Aydın",
-    "Balıkesir",
-    "Bilecik",
-    "Bingöl",
-    "Bitlis",
-    "Bolu",
-    "Burdur",
-    "Bursa",
-    "Çanakkale",
-    "Çankırı",
-    "Çorum",
-    "Denizli",
-    "Diyarbakır",
-    "Edirne",
-    "Elazığ",
-    "Erzincan",
-    "Erzurum",
-    "Eskişehir",
-    "Gaziantep",
-    "Giresun",
-    "Gümüşhane",
-    "Hakkari",
-    "Hatay",
-    "Isparta",
-    "Mersin",
-    "İstanbul",
-    "İzmir",
-    "Kars",
-    "Kastamonu",
-    "Kayseri",
-    "Kırklareli",
-    "Kırşehir",
-    "Kocaeli",
-    "Konya",
-    "Kütahya",
-    "Malatya",
-    "Manisa",
-    "Kahramanmaraş",
-    "Mardin",
-    "Muğla",
-    "Muş",
-    "Nevşehir",
-    "Niğde",
-    "Ordu",
-    "Rize",
-    "Sakarya",
-    "Samsun",
-    "Siirt",
-    "Sinop",
-    "Sivas",
-    "Tekirdağ",
-    "Tokat",
-    "Trabzon",
-    "Tunceli",
-    "Şanlıurfa",
-    "Uşak",
-    "Van",
-    "Yozgat",
-    "Zonguldak",
-    "Aksaray",
-    "Bayburt",
-    "Karaman",
-    "Kırıkkale",
-    "Batman",
-    "Şırnak",
-    "Bartın",
-    "Ardahan",
-    "Iğdır",
-    "Yalova",
-    "Karabük",
-    "Kilis",
-    "Osmaniye",
-    "Düzce",
-  ];
+  const vehicle = { bus: "Otobüs", plain: "Uçak", train: "Tren" };
+  const findTrip = useSelector((state) => state.trip.findTrip);
+
+  const iller = ["Adana", "Diyarbakır", "Isparta", "Mersin", "İstanbul"];
 
   const form = useForm({
     resolver: zodResolver(FormSchema),
   });
 
   const navigate = useNavigate();
-  const onSubmit = (data) => {
-   console.log("trip : ", data)
-   console.log("trip : ", data.date.toISOString())
-    navigate("trip")
 
+  const onSubmit = (data) => {
+    try {
+      data.date = data.date.toISOString();
+      data.vehicle_type = vehicleType;
+      dispatch(setFindTrip(data));
+      console.log("findtrip : ", data);
+      navigate("/trip");
+    } catch (error) {
+      // Error handling is done in the useEffect above
+      console.error("error:", error);
+    }
   };
 
   return (
@@ -147,7 +77,7 @@ export function TripSearchForm({ vehicleType }) {
           {/* Nereden */}
           <FormField
             control={form.control}
-            name="from"
+            name="origin"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Nereden</FormLabel>
@@ -162,7 +92,9 @@ export function TripSearchForm({ vehicleType }) {
                   </FormControl>
                   <SelectContent>
                     {iller.map((il, index) => (
-                      <SelectItem value={il} key={index}>{il}</SelectItem>
+                      <SelectItem value={il} key={index}>
+                        {il}
+                      </SelectItem>
                     ))}
                   </SelectContent>
                 </Select>
@@ -174,7 +106,7 @@ export function TripSearchForm({ vehicleType }) {
           {/* Nereye */}
           <FormField
             control={form.control}
-            name="to"
+            name="destination"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Nereye</FormLabel>
@@ -189,7 +121,9 @@ export function TripSearchForm({ vehicleType }) {
                   </FormControl>
                   <SelectContent>
                     {iller.map((il, index) => (
-                      <SelectItem value={il} key={index}>{il}</SelectItem>
+                      <SelectItem value={il} key={index}>
+                        {il}
+                      </SelectItem>
                     ))}
                   </SelectContent>
                 </Select>

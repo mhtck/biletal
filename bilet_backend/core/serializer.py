@@ -5,7 +5,7 @@ from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
-from .models import Trip, Route, Vehicle, Seat, Reservation, Payment
+from .models import Trip, Route, Vehicle, Seat, Reservation, Payment, Company
 from django.utils.timezone import now
 
 
@@ -93,6 +93,11 @@ class VehicleSerializer(serializers.ModelSerializer):
     class Meta:
         model = Vehicle
         fields = ['id', 'vehicle_type', 'capacity']
+        
+class CompanySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Company
+        fields = ['id', 'name']
 
 class RouteSerializer(serializers.ModelSerializer):
     class Meta:
@@ -123,6 +128,7 @@ class TripSerializer(serializers.ModelSerializer):
     route = RouteSerializer(read_only=True)
     vehicle = VehicleSerializer(read_only=True)
     seats = serializers.SerializerMethodField()
+    company = CompanySerializer(read_only=True)
 
     class Meta:
         model = Trip
