@@ -20,6 +20,14 @@ Django REST Framework + React (Redux) + Redis + Websocket kullanılarak gelişti
 ![Uygulama Ekran Görüntüsü](biletal.png)
 
 
+- [X] Kullanıcı kayıt ve giriş sistemi (JWT veya OAuth2 tabanlı)
+- [X] Sefer arama (kalkış, varış, tarih, fiyat filtreleme)
+- [X] Koltuk seçimi ve aynı koltuğun birden fazla kişiye satılmasını engelleme
+- [ ] Rezervasyon ve ödeme süreci (mock ödeme servisi yeterlidir)
+- [ ] PNR numarası ile bilet görüntüleme ve iptal
+- [ ] Yönetici paneli üzerinden sefer ekleme/düzenleme ve satış raporları
+- [ ] Gerçek zamanlı koltuk doluluk güncellemeleri (WebSocket veya SSE)
+- [ ] Oluşturulan bilet PDF çıktısı alınabilmelidir.
 ## 🛠️ Kurulum
 
 ### Backend (Django)
