@@ -1,5 +1,6 @@
 # 🎫 Biletal
 
+
 Django REST Framework + React (Redux) + Redis + Websocket kullanılarak geliştirilmiş, çok kullanıcı tipi destekleyen bilet rezervasyon sistemi.
 
 ## 🚀 Özellikler
@@ -24,7 +25,7 @@ Django REST Framework + React (Redux) + Redis + Websocket kullanılarak gelişti
 ### Backend (Django)
 
 Aşagıdaki bilgilere göre veritabanı oluşturun.
-```json
+```
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
@@ -35,35 +36,51 @@ DATABASES = {
         'PORT': '5432',
     }
 }
+```
 
 
 ```bash
 # Ortam oluştur
 python -m venv venv
 source venv/bin/activate
-
+```
 # Gereksinimleri yükle
+```bash
 pip install -r requirements.txt
+```
 
 # Veritabanını oluştur
+```bash
 python manage.py migrate
+```
 
 # Random veritabanı oluşturmak için
-python random_route.py
+```bash
+python biletal_backend/random_route.py
+```
 
 # Süper kullanıcı oluştur
+```bash
 python manage.py createsuperuser
+```
 
 # Sunucuyu başlat
+```bash
 python manage.py runserver
+```
 
 ### Frontend
-
-cd frontend
+```bash
+cd bilet_frontend
+```
 
 # Paketleri yükle
+```bash
 npm install
+```
 
 # Geliştirme sunucusu
+```bash
 npm run dev
+```
 
