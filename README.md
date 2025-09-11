@@ -11,6 +11,7 @@ Django REST Framework + React (Redux) + Redis + Websocket kullanılarak gelişti
 - 🧾 API üzerinden rezervasyon
 - 🎛️ Yönetim Paneli (Django Admin)
 - 🌐 Postgres veritabanı desteği
+![Postman Dökğmantasyon Linki](https://documenter.getpostman.com/view/16848466/2sB3HonJwn#1cf6cff8-5bd2-43dc-a50f-ed97978e49e5)
 
 ---
 
